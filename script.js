@@ -1,17 +1,18 @@
+
 'use strict';
 
 document.addEventListener("DOMContentLoaded", function () {
 
   const supportedLanguages = ["de", "en", "es", "fr", "pt", "ja"];
 
-  // Определяем язык системы + параметры lang  из строки запроса
+  // Определяем язык системы + параметры lang из строки запроса
   const systemLanguage = navigator.language.slice(0, 2);
   const urlParams = new URLSearchParams(window.location.search);
-  let selecetedLanguage = urlParams.get("lang") || systemLanguage;
+  let selectedLanguage = urlParams.get("lang") || systemLanguage;
 
-  //  Проверяем язык на поддержку
-  if (!supportedLanguages.includes(selecetedLanguage)) {
-    selecetedLanguage = "en";
+  // Проверяем язык на поддержку
+  if (!supportedLanguages.includes(selectedLanguage)) {
+    selectedLanguage = "en";
   }
 
   const allPrices = {
@@ -20,22 +21,21 @@ document.addEventListener("DOMContentLoaded", function () {
     WEEKLY_ACCESS: '$6.99'
   }
 
-  loadLanguageContent(selecetedLanguage);
+  loadLanguageContent(selectedLanguage);
 
-  // Подгружаем языковые строки в зависимости от выбранного
+  // Подгружаем языковые строки в зависимости от выбранного языка
   function loadLanguageContent(language) {
     fetch(`langs/${language}.json`)
       .then((response) => response.json())
       .then((data) => {
         updateLanguageContent(data, allPrices);
-        updateAdditionalPrices(allPrices)
       })
       .catch(error => {
         console.error("Error loading language content:", error);
         if (language !== "en") {
           loadLanguageContent("en");
         }
-      })
+      });
   }
 
   // Обновляем содержимое ключевых элементов
@@ -47,32 +47,58 @@ document.addEventListener("DOMContentLoaded", function () {
       avatars: "Magic Avatars <br>With 20% Off",
       yearlyAccess: "YEARLY ACCESS",
       bestOffer: "BEST OFFER",
-      yearlyPrice: "Just {{YEARLY_ACCESS_PER_YEAR}} per year",
+      yearlyPrice: "Just {{price}} per year",
       weeklyAccess: "WEEKLY ACCESS",
-      weeklyPrice: "{{WEEKLY_ACCESS}} <br>per week",
+      weeklyPrice: "{{price}} <br>per week",
       terms: "Terms of Use",
       privacy: "Privacy Policy",
       restore: "Restore",
-      continue: "Continue",
+      continue: "Continue"
     };
 
     for (const [elementId, dataKey] of Object.entries(elements)) {
       const element = document.getElementById(elementId);
       if (element) {
-        element.innerHTML = replacePlaceholders(data[dataKey] || dataKey, replacements);
+        let translatedText = data[dataKey] || dataKey;
+
+        // Заменяем значения плейсхолдеров, если они есть
+        if (dataKey === "Just {{price}} per year") {
+          translatedText = translatedText.replace('{{price}}', replacements.YEARLY_ACCESS_PER_YEAR);
+        } else if (dataKey === "{{price}} <br>per week") {
+          translatedText = translatedText.replace('{{price}}', replacements.WEEKLY_ACCESS);
+        }
+
+        element.innerHTML = translatedText;
       }
     }
-  }
 
-  function updateAdditionalPrices(prices) {
+    // Обновляем дополнительную цену отдельно
     const yearlyPricePerWeekElement = document.getElementById('yearlyPricePerWeek');
     if (yearlyPricePerWeekElement) {
-      yearlyPricePerWeekElement.innerHTML = `${prices.YEARLY_ACCES_PER_WEEK} <br>per week`;
+      const yearlyPricePerWeekText = data["{{price}} <br>per week"] || "{{price}} <br>per week";
+      yearlyPricePerWeekElement.innerHTML = yearlyPricePerWeekText.replace('{{price}}', replacements.YEARLY_ACCES_PER_WEEK);
+    }
+    updateBestOfferText(data["BEST OFFER"]);
+  }
+
+  //Обновляем текст псевдоэлемента Best Offer
+  function updateBestOfferText(translatedText) {
+    const styleSheet = document.styleSheets[0];
+    const ruleIndex = Array.from(styleSheet.cssRules).findIndex(
+      rule => rule.selectorText === '.pricing__option--yearly::after'
+    );
+
+    if (ruleIndex !== -1) {
+      styleSheet.cssRules[ruleIndex].style.content = `"${translatedText}"`;
+    } else {
+      styleSheet.insertRule(`.pricing__option--yearly::after { content: "${translatedText}"; }`, styleSheet.cssRules.length);
     }
   }
 
   // Заменяем значения в строке на значения из словаря
-  function replacePlaceholders(text, replacements) {
-    return text.replace(/\{\{(\w+)\}\}/g, (_, key) => replacements[key] || "");
-  }
+  // function replacePlaceholders(text, replacements) {
+  //   return text.replace(/\{\{(\w+)\}\}/g, (_, key) => replacements[key] || "");
+  // }
 });
+
+

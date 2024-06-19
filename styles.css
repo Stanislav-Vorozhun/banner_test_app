@@ -133,6 +133,7 @@ body {
 .content__features {
   display: flex;
   margin-bottom: 40px;
+  justify-content: center;
 }
 
 .feature {
@@ -145,6 +146,7 @@ body {
   flex-direction: column-reverse;
   border-radius: 12px;
   border: 0.9px solid #ffffff33;
+  filter: drop-shadow(0px 0px 21.6px rgba(255, 130, 228, 0.24));
 }
 
 .feature.exclusive {
@@ -195,6 +197,7 @@ body {
 .active {
   border: 1px solid #fff;
   background: #ffffff3b;
+  backdrop-filter: blur(5.436563491821289px);
 }
 
 .option__label {
@@ -229,6 +232,7 @@ body {
   line-height: 15px;
   font-size: 13px;
   border-radius: 10px;
+  box-shadow: 0px 1px 6px 0px rgba(0, 0, 0, 0.50);
 }
 
 .content__continue-button {
