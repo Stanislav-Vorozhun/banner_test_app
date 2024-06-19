@@ -105,12 +105,22 @@ body {
 .feature {
   display: flex;
   width: 104px;
-  height: 130px;
-  background-image: url(img/f1.png);
+  height: 138px;
   background-size: cover;
   background-repeat: no-repeat;
   align-items: flex-start;
   flex-direction: column-reverse;
+  border-radius: 12px;
+}
+
+.feature.exclusive {
+  background-image: url(img/f2.png);
+}
+.feature.magic {
+  background-image: url(img/f3.png);
+}
+.feature.unlimit {
+  background-image: url(img/f1.png);
 }
 
 .feature:not(:last-child) {
