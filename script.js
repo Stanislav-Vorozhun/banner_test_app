@@ -15,9 +15,9 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   const allPrices = {
-    YEARLY_ACCESS_PER_YEAR: 39.99,
-    YEARLY_ACCES_PER_WEEK: 0.48,
-    WEEKLY_ACCESS: 6.99
+    YEARLY_ACCESS_PER_YEAR: '$39.99',
+    YEARLY_ACCES_PER_WEEK: '$0.48',
+    WEEKLY_ACCESS: '$6.99'
   }
 
   loadLanguageContent(selecetedLanguage);
@@ -28,6 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
       .then((response) => response.json())
       .then((data) => {
         updateLanguageContent(data, allPrices);
+        updateAdditionalPrices(allPrices)
       })
       .catch(error => {
         console.error("Error loading language content:", error);
@@ -60,6 +61,13 @@ document.addEventListener("DOMContentLoaded", function () {
       if (element) {
         element.innerHTML = replacePlaceholders(data[dataKey] || dataKey, replacements);
       }
+    }
+  }
+
+  function updateAdditionalPrices(prices) {
+    const yearlyPricePerWeekElement = document.getElementById('yearlyPricePerWeek');
+    if (yearlyPricePerWeekElement) {
+      yearlyPricePerWeekElement.innerHTML = `${prices.YEARLY_ACCES_PER_WEEK} <br>per week`;
     }
   }
 
