@@ -14,6 +14,12 @@ document.addEventListener("DOMContentLoaded", function () {
     selecetedLanguage = "en";
   }
 
+  const allPrices = {
+    YEARLY_ACCESS_PER_YEAR: 39.99,
+    YEARLY_ACCES_PER_WEEK: 0.48,
+    WEEKLY_ACCESS: 6.99
+  }
+
   loadLanguageContent(selecetedLanguage);
 
   // Подгружаем языковые строки в зависимости от выбранного
@@ -21,8 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
     fetch(`langs/${language}.json`)
       .then((response) => response.json())
       .then((data) => {
-        const price = "19.99";
-        updateLanguageContent(data, { price });
+        updateLanguageContent(data, allPrices);
       })
       .catch(error => {
         console.error("Error loading language content:", error);
@@ -41,9 +46,9 @@ document.addEventListener("DOMContentLoaded", function () {
       avatars: "Magic Avatars <br>With 20% Off",
       yearlyAccess: "YEARLY ACCESS",
       bestOffer: "BEST OFFER",
-      yearlyPrice: "Just {{price}} per year",
+      yearlyPrice: "Just {{YEARLY_ACCESS_PER_YEAR}} per year",
       weeklyAccess: "WEEKLY ACCESS",
-      weeklyPrice: "{{price}} <br>per week",
+      weeklyPrice: "{{WEEKLY_ACCESS}} <br>per week",
       terms: "Terms of Use",
       privacy: "Privacy Policy",
       restore: "Restore",
@@ -53,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
     for (const [elementId, dataKey] of Object.entries(elements)) {
       const element = document.getElementById(elementId);
       if (element) {
-        element.innerHTML = replacePlaceholders(data[dataKey], replacements);
+        element.innerHTML = replacePlaceholders(data[dataKey] || dataKey, replacements);
       }
     }
   }
