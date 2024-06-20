@@ -1,4 +1,3 @@
-
 // Loading and updating language content on a web page
 export function loadLanguageContent(language, allPrices) {
   fetch(`langs/${language}.json`)
@@ -55,9 +54,11 @@ function updateLanguageContent(data, replacements) {
   }
 
   // Updating an additional price separately
-  const yearlyPricePerWeekElement = document.getElementById("yearlyPricePerWeek");
+  const yearlyPricePerWeekElement =
+    document.getElementById("yearlyPricePerWeek");
   if (yearlyPricePerWeekElement) {
-    const yearlyPricePerWeekText = data["{{price}} <br>per week"] || "{{price}} <br>per week";
+    const yearlyPricePerWeekText =
+      data["{{price}} <br>per week"] || "{{price}} <br>per week";
     yearlyPricePerWeekElement.innerHTML = yearlyPricePerWeekText.replace(
       "{{price}}",
       replacements.YEARLY_ACCES_PER_WEEK

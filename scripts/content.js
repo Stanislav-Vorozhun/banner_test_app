@@ -10,6 +10,4 @@ export function setupContinueButton() {
       : "https://www.google.com/";
     window.location.href = activeOption;
   });
-
-  
 }

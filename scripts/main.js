@@ -1,12 +1,12 @@
 "use strict";
 
-import { loadLanguageContent } from './lang.js';
-import { setupPricingOptions } from './pricing.js';
-import { setupContinueButton } from './content.js';
+import { loadLanguageContent } from "./lang.js";
+import { setupPricingOptions } from "./pricing.js";
+import { setupContinueButton } from "./content.js";
 
 document.addEventListener("DOMContentLoaded", function () {
   const supportedLanguages = ["de", "en", "es", "fr", "pt", "ja"];
-  
+
   // Determining the system language + lang parameter from the query string
   const systemLanguage = navigator.language.slice(0, 2);
   const urlParams = new URLSearchParams(window.location.search);

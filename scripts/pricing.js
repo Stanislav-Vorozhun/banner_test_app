@@ -1,4 +1,3 @@
-
 // Interactive switching between pricing options on the page
 export function setupPricingOptions() {
   const weeklyOption = document.querySelector(".pricing__option--weekly");
