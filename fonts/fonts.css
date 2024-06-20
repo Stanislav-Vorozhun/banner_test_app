@@ -1,0 +1,19 @@
+@font-face {
+  font-family: "SFHeavy";
+  src: url("SFHeavy.otf") format("opentype");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "SFRegular";
+  src: url("SFRegular.otf") format("opentype");
+  
+}
+
+@font-face {
+  font-family: "SFSemiBold";
+  src: url("SFSemibold.otf") format("opentype");
+  font-weight: bold;
+  font-style: normal;
+}

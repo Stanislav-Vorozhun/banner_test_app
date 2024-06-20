@@ -1,23 +1,5 @@
-@font-face {
-  font-family: "SFHeavy";
-  src: url("./fonts/SFHeavy.otf") format("opentype");
-  font-weight: bold;
-  font-style: normal;
-}
 
-@font-face {
-  font-family: "SFRegular";
-  src: url("./fonts/SFRegular.otf") format("opentype");
-  /* font-weight: normal;
-  font-style: normal; */
-}
-
-@font-face {
-  font-family: "SFSemiBold";
-  src: url("./fonts/SFSemibold.otf") format("opentype");
-  font-weight: bold;
-  font-style: normal;
-}
+@import url('fonts/fonts.css');
 
 body,
 h1,
