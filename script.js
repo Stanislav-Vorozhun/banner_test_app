@@ -1,8 +1,6 @@
-
-'use strict';
+"use strict";
 
 document.addEventListener("DOMContentLoaded", function () {
-
   const supportedLanguages = ["de", "en", "es", "fr", "pt", "ja"];
 
   // Определяем язык системы + параметры lang из строки запроса
@@ -16,10 +14,10 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   const allPrices = {
-    YEARLY_ACCESS_PER_YEAR: '$39.99',
-    YEARLY_ACCES_PER_WEEK: '$0.48',
-    WEEKLY_ACCESS: '$6.99'
-  }
+    YEARLY_ACCESS_PER_YEAR: "$39.99",
+    YEARLY_ACCES_PER_WEEK: "$0.48",
+    WEEKLY_ACCESS: "$6.99",
+  };
 
   loadLanguageContent(selectedLanguage);
 
@@ -30,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
       .then((data) => {
         updateLanguageContent(data, allPrices);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error("Error loading language content:", error);
         if (language !== "en") {
           loadLanguageContent("en");
@@ -53,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
       terms: "Terms of Use",
       privacy: "Privacy Policy",
       restore: "Restore",
-      continue: "Continue"
+      continue: "Continue",
     };
 
     for (const [elementId, dataKey] of Object.entries(elements)) {
@@ -63,9 +61,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Заменяем значения плейсхолдеров, если они есть
         if (dataKey === "Just {{price}} per year") {
-          translatedText = translatedText.replace('{{price}}', replacements.YEARLY_ACCESS_PER_YEAR);
+          translatedText = translatedText.replace(
+            "{{price}}",
+            replacements.YEARLY_ACCESS_PER_YEAR
+          );
         } else if (dataKey === "{{price}} <br>per week") {
-          translatedText = translatedText.replace('{{price}}', replacements.WEEKLY_ACCESS);
+          translatedText = translatedText.replace(
+            "{{price}}",
+            replacements.WEEKLY_ACCESS
+          );
         }
 
         element.innerHTML = translatedText;
@@ -73,10 +77,15 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Обновляем дополнительную цену отдельно
-    const yearlyPricePerWeekElement = document.getElementById('yearlyPricePerWeek');
+    const yearlyPricePerWeekElement =
+      document.getElementById("yearlyPricePerWeek");
     if (yearlyPricePerWeekElement) {
-      const yearlyPricePerWeekText = data["{{price}} <br>per week"] || "{{price}} <br>per week";
-      yearlyPricePerWeekElement.innerHTML = yearlyPricePerWeekText.replace('{{price}}', replacements.YEARLY_ACCES_PER_WEEK);
+      const yearlyPricePerWeekText =
+        data["{{price}} <br>per week"] || "{{price}} <br>per week";
+      yearlyPricePerWeekElement.innerHTML = yearlyPricePerWeekText.replace(
+        "{{price}}",
+        replacements.YEARLY_ACCES_PER_WEEK
+      );
     }
     updateBestOfferText(data["BEST OFFER"]);
   }
@@ -85,20 +94,43 @@ document.addEventListener("DOMContentLoaded", function () {
   function updateBestOfferText(translatedText) {
     const styleSheet = document.styleSheets[0];
     const ruleIndex = Array.from(styleSheet.cssRules).findIndex(
-      rule => rule.selectorText === '.pricing__option--yearly::after'
+      (rule) => rule.selectorText === ".pricing__option--yearly::after"
     );
 
+    const newContent = `"${translatedText}"`;
+
     if (ruleIndex !== -1) {
-      styleSheet.cssRules[ruleIndex].style.content = `"${translatedText}"`;
+      styleSheet.cssRules[ruleIndex].style.content = newContent;
     } else {
-      styleSheet.insertRule(`.pricing__option--yearly::after { content: "${translatedText}"; }`, styleSheet.cssRules.length);
+      styleSheet.insertRule(
+        `.pricing__option--yearly::after { content: ${newContent}; }`,
+        styleSheet.cssRules.length
+      );
     }
   }
 
-  // Заменяем значения в строке на значения из словаря
-  // function replacePlaceholders(text, replacements) {
-  //   return text.replace(/\{\{(\w+)\}\}/g, (_, key) => replacements[key] || "");
-  // }
+  const weeklyOption = document.querySelector(".pricing__option--weekly");
+  const yearlyOption = document.querySelector(".pricing__option--yearly");
+  const continueButton = document.getElementById("continue");
+
+  weeklyOption.addEventListener("click", () => {
+    toggleActiveClass(weeklyOption, yearlyOption);
+  });
+
+  yearlyOption.addEventListener("click", () => {
+    toggleActiveClass(yearlyOption, weeklyOption);
+  });
+
+ 
+  continueButton.addEventListener("click", () => {
+    const activeOption = yearlyOption.classList.contains("active")
+      ? "https://www.apple.com/"
+      : "https://www.google.com/";
+    window.location.href = activeOption;
+  });
+
+  function toggleActiveClass(selectedOption, otherOption) {
+    selectedOption.classList.add("active");
+    otherOption.classList.remove("active");
+  }
 });
-
-

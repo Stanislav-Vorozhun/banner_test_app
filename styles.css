@@ -41,7 +41,7 @@ h1 {
 }
 
 body {
-  background-image: url(img/bg.png);
+  background-image: url(img/bg_8.webp);
   background-size: cover;
   background-repeat: no-repeat;
   color: #fff;
@@ -150,13 +150,13 @@ body {
 }
 
 .feature.exclusive {
-  background-image: url(img/f2.png);
+  background-image: url(img/f2.webp);
 }
 .feature.magic {
-  background-image: url(img/f3.png);
+  background-image: url(img/f3.webp);
 }
 .feature.unlimit {
-  background-image: url(img/f1.png);
+  background-image: url(img/f1.webp);
 }
 
 .feature:not(:last-child) {
@@ -187,6 +187,7 @@ body {
   display: flex;
   margin-bottom: 8px;
   padding: 8px;
+  border: 1px solid #fff0;
   border-radius: 32px;
   background: #ffffff12;
   text-align: left;
@@ -232,12 +233,12 @@ body {
   line-height: 15px;
   font-size: 13px;
   border-radius: 10px;
-  box-shadow: 0px 1px 6px 0px rgba(0, 0, 0, 0.50);
+  box-shadow: 0px 1px 6px 0px rgba(0, 0, 0, 0.5);
 }
 
 .content__continue-button {
   width: 100%;
-  padding: 15px 20px;
+  padding: 16px 20px;
   background-color: #fff;
   border: none;
   border-radius: 32px;
@@ -252,17 +253,92 @@ body {
 }
 
 .footer__link {
-  font-family: 'SFRegular', sans-serif;
-  color:#ffffff80;
+  font-family: "SFRegular", sans-serif;
+  color: #ffffff80;
   font-size: 12px;
   text-decoration: none;
 }
 
-
-.footer__link:not(:last-child){
+.footer__link:not(:last-child) {
   margin-right: 30px;
 }
 
 .footer__link:hover {
   text-decoration: underline;
+}
+
+/* Iphone SE and above to 14 */
+@media screen and (min-width: 376px) and (max-width: 391px) {
+  body {
+    background-image: url(img/bg_13.webp);
+  }
+
+  .app__main {
+    padding: 0px 24px 44px 24px;
+  }
+
+  .app__header {
+    padding: 65px 0px 0px 24px;
+  }
+
+  .main__content {
+    width: 100%;
+    max-width: 342px;
+  }
+
+  .feature:not(:last-child) {
+    margin-right: 14px;
+  }
+
+  .content__features {
+    margin-bottom: 50px;
+  }
+
+  .content__pricing {
+    margin-bottom: 16px;
+  }
+
+  .app__footer {
+    padding-bottom: 31px;
+  }
+}
+
+@media screen and (min-width: 391px) {
+  body {
+    background-image: url(img/bg_13.webp);
+  }
+  .app__header {
+    padding: 70px 0px 0px 30px;
+  }
+
+  .app__header-close-button img {
+    width: 15px;
+  }
+
+
+  .feature:not(:last-child) {
+    margin-right: 15px;
+  }
+
+  .main__content {
+    width: 100%;
+    max-width: 382px;
+  }
+
+  .feature {
+    width: 100%;
+    height: 150px;
+}
+
+  .pricing__option {
+    margin-bottom: 10px;
+  }
+
+  .content__continue-button {
+   margin-bottom: 65px;
+}
+
+  .app__footer {
+    padding-bottom: 50px;
+  }
 }
